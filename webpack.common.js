@@ -38,11 +38,14 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(js)$/,
+                test: /\.(js|jsx)$/,
                 include: srcPath,
                 loader: {
-                    loader: "babel-loader"
-                }
+                    loader: "babel-loader",
+                    query: {
+                        presets: ['es2015', 'react']
+                    }
+                },
             },
             {
                 test: /\.(jpg|png|gif)$/,
@@ -54,7 +57,7 @@ module.exports = {
                 include: srcPath,
                 use: [
                     {
-                        loader: "babel-loader"
+                        loader: "babel-loader",
                     },
                     {
                         loader: "svg-react-loader",
