@@ -16,7 +16,23 @@ class App extends Component {
     }
 
     componentWillMount() {
-        createInlineManualPlayer(this.state.user);
+      // Moved to `componentDidMount`, since the player require for DOM elements
+      // to exist.
+    }
+
+    componentDidMount() {
+      createInlineManualPlayer(this.state.user)
+        // Receive loaded, created & initialized player instance.
+        .then(player => {
+          // Reset unmatchable topic condition.
+          // This should be done differently during the authoring,
+          // as was mentioned in the e-mail.
+          player.topics['38276'].steps[0].condition = null;
+          // Re-activate the topic, if you wish
+          player.activateTopic('38276');
+        }).catch(err => {
+          console.error(err);
+        });
     }
 
     componentWillReceiveProps(nextProps) {
